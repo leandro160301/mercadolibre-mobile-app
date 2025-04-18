@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="EditableTextView">
+        <attr name="key" format="string" />
+    </declare-styleable>
+</resources>

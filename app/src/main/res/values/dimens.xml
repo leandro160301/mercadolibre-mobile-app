@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="delta_x">561</dimen>
+    <dimen name="delta_y">341</dimen>
+</resources>
