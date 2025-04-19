@@ -1,4 +1,4 @@
-package com.jws.jwsapi.feature_preview.presentation
+package com.jws.jwsapi.feature_preview.presentation.viewmodel
 
 import com.jws.jwsapi.feature_preview.domain.preview.Preview
 

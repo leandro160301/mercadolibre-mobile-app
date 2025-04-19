@@ -15,13 +15,27 @@
         android:orientation="vertical"
         android:padding="8dp">
 
-        <!-- Imagen del producto -->
-        <ImageView
-            android:id="@+id/productImage"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:scaleType="centerCrop"
-            android:layout_marginBottom="8dp" />
+            android:layout_height="200dp"
+            android:layout_marginBottom="8dp">
+
+            <!-- ViewPager2 para imágenes -->
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/imagePager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- Indicador con fondo para mejor visibilidad -->
+            <me.relex.circleindicator.CircleIndicator3
+                android:id="@+id/imageIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:padding="4dp"
+                android:background="@drawable/indicator_background" />
+        </FrameLayout>
 
         <!-- Título del producto -->
         <TextView

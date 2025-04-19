@@ -1,5 +1,41 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="delta_x">561</dimen>
-    <dimen name="delta_y">341</dimen>
+
+    <dimen name="screen_horizontal_margin">16dp</dimen>
+    <dimen name="screen_vertical_margin">16dp</dimen>
+
+    <dimen name="padding_margin_micro">2dp</dimen>
+    <dimen name="padding_margin_extra_small">4dp</dimen>
+    <dimen name="padding_margin_small">8dp</dimen>
+    <dimen name="padding_margin_normal_smaller">12dp</dimen>
+    <dimen name="padding_margin_normal">16dp</dimen>
+    <dimen name="padding_margin_large">24dp</dimen>
+    <dimen name="padding_margin_extra_large">36dp</dimen>
+
+    <dimen name="icon_size_extra_small">12dp</dimen>
+    <dimen name="icon_size_small">16dp</dimen>
+    <dimen name="icon_size_normal">24dp</dimen>
+    <dimen name="icon_size_large">36dp</dimen>
+    <dimen name="icon_size_extra_large">48dp</dimen>
+    <dimen name="icon_size_huge">56dp</dimen>
+
+    <dimen name="image_size_small">64dp</dimen>
+    <dimen name="image_size_medium">96dp</dimen>
+    <dimen name="image_size_large">128dp</dimen>
+
+    <dimen name="round_corner_small">2dp</dimen>
+
+
+    <dimen name="round_corner_normal">4dp</dimen>
+    <dimen name="round_corner_large">8dp</dimen>
+
+
+    <dimen name="section_decorator_header_vertical_offset">48dp</dimen>
+    <dimen name="section_decorator_divider_size">1dp</dimen>
+
+    <dimen name="search_view_height">60dp</dimen>
+
+    <dimen name="common_radius">14dp</dimen>
+    <dimen name="common_elevation">8dp</dimen>
+    <dimen name="detail_image_size">200dp</dimen>
+
 </resources>

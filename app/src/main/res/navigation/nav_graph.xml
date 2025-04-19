@@ -26,6 +26,10 @@
         <action
             android:id="@+id/action_previewFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+
+        <action
+            android:id="@+id/action_previewFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
 
     <fragment

@@ -16,8 +16,8 @@ class PreviewRepositoryImpl @Inject constructor(
     private val previewApi: PreviewApi
 ): PreviewRepository {
 
-    override suspend fun getItemsBySeller(): Resource<ItemsResponse> {
-        return getApiResponse { itemsApi.getItemsBySeller(VENDOR_ID, "Bearer $TOKEN") }
+    override suspend fun getItemsBySeller(query: String?): Resource<ItemsResponse> {
+        return getApiResponse { itemsApi.getItemsBySeller(VENDOR_ID, "Bearer $TOKEN", query = query) }
     }
 
     override suspend fun getItemsDetails(ids: String): Resource<List<Preview>> {

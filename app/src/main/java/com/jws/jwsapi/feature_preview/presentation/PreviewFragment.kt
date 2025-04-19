@@ -9,12 +9,16 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.jws.jwsapi.R
 import com.jws.jwsapi.databinding.FragmentPreviewBinding
-import com.jws.jwsapi.databinding.FragmentSearchBinding
 import com.jws.jwsapi.feature_preview.presentation.epoxy.PreviewEpoxyController
+import com.jws.jwsapi.feature_preview.presentation.viewmodel.PreviewUiEffect
+import com.jws.jwsapi.feature_preview.presentation.viewmodel.PreviewUiEvent
+import com.jws.jwsapi.feature_preview.presentation.viewmodel.PreviewUiState
+import com.jws.jwsapi.feature_preview.presentation.viewmodel.PreviewViewModel
 import com.jws.jwsapi.shared.BaseFragment
 import com.jws.jwsapi.utils.ToastHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,9 +31,16 @@ class PreviewFragment : BaseFragment<FragmentPreviewBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val args: PreviewFragmentArgs by navArgs()
+        val query = args.query
         setupRecyclerView()
         setOnClickListener()
         observeUiState()
+        fetchItems(query)
+    }
+
+    private fun fetchItems(query: String?) {
+        viewModel.onEvent(PreviewUiEvent.FetchItems(query))
     }
 
     fun openDetailsScreen() {
@@ -44,13 +55,12 @@ class PreviewFragment : BaseFragment<FragmentPreviewBinding>() {
     }
 
     private fun setOnClickListener() {
-/*        binding.headerContainer.setOnClickListener { viewModel.onEvent(FileUiEvent.GoBackToStorageList) }
-        binding.btTransfer.setOnClickListener { viewModel.onEvent(FileUiEvent.FinishActionFile) }*/
+        binding.editTextSearch.setOnClickListener { viewModel.onEvent(PreviewUiEvent.RequestNavigateToSearch) }
     }
 
     private fun setupAdapter() {
         controller = PreviewEpoxyController(
-            onPreviewSelected = { /*FileUiHelper.showFileDialog(it, requireContext(), viewModel)*/ }
+            onPreviewSelected = { viewModel.onEvent(PreviewUiEvent.RequestNavigateToDetails(it)) }
         ).also {
             binding.epoxyRecyclerView.setController(it)
         }
@@ -73,8 +83,11 @@ class PreviewFragment : BaseFragment<FragmentPreviewBinding>() {
     private suspend fun handleEventFlow(): Nothing = viewModel.eventFlow.collect { event ->
         when(event) {
             is PreviewUiEffect.ShowToastError -> ToastHelper.message(event.error, R.layout.item_customtoasterror, requireContext())
-            is PreviewUiEffect.ShowToastMessage -> {
-                /*TODO()*/
+            is PreviewUiEffect.ShowToastMessage ->  ToastHelper.message(event.message, R.layout.item_customtoastok, requireContext())
+            is PreviewUiEffect.NavigateToSearch -> {
+                val action = PreviewFragmentDirections
+                    .actionPreviewFragmentToSearchFragment()
+                findNavController().navigate(action)
             }
         }
     }

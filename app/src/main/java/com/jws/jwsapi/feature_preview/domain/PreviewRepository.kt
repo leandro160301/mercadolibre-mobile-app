@@ -5,6 +5,6 @@ import com.jws.jwsapi.feature_preview.domain.preview.Preview
 import com.jws.jwsapi.shared.Resource
 
 interface PreviewRepository {
-    suspend fun getItemsBySeller(): Resource<ItemsResponse>
+    suspend fun getItemsBySeller(query: String? = null): Resource<ItemsResponse>
     suspend fun getItemsDetails(ids: String): Resource<List<Preview>>
 }

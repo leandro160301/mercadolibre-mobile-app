@@ -1,9 +1,10 @@
-package com.jws.jwsapi.feature_preview.presentation
+package com.jws.jwsapi.feature_search.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jws.jwsapi.feature_preview.domain.FetchItemsBySellerUseCase
 import com.jws.jwsapi.feature_preview.domain.FetchPreviewsByIdUseCase
+import com.jws.jwsapi.feature_search.domain.Search
 import com.jws.jwsapi.shared.DispatcherProvider
 import com.jws.jwsapi.shared.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,29 +16,34 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PreviewViewModel @Inject constructor(
-    private val fetchItemsBySellerUseCase: FetchItemsBySellerUseCase,
-    private val fetchPreviewsByIdUseCase: FetchPreviewsByIdUseCase,
+class SearchViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(PreviewUiState())
-    val uiState: StateFlow<PreviewUiState> = _uiState
+    private val _uiState = MutableStateFlow(SearchUiState())
+    val uiState: StateFlow<SearchUiState> = _uiState
 
-    private val _eventFlow = MutableSharedFlow<PreviewUiEffect>()
+    private val _eventFlow = MutableSharedFlow<SearchUiEffect>()
     val eventFlow = _eventFlow.asSharedFlow()
 
     init {
-        loadItems()
+        _uiState.value = _uiState.value.copy(search = listOf(Search("iphone"), Search("auto"), Search("zapatillas")))
     }
 
-    fun onEvent(event: PreviewUiEvent) {
+    fun onEvent(event: SearchUiEvent) {
         when (event) {
-            is PreviewUiEvent.FetchItems -> loadItems()
-            is PreviewUiEvent.UpdateSystem -> TODO()
+            is SearchUiEvent.RequestNavigateToPreview -> navPreview(event.value)
         }
     }
 
-    private fun loadItems() {
+    private fun navPreview(value: String) {
+        emitEffect(SearchUiEffect.NavigateToPreview(value))
+    }
+
+    private fun navDetails() {
+//        findNavController().navigate(R.id.action_previewFragment_to_searchFragment)
+    }
+
+    /*private fun loadItems() {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
             when (val result = fetchItemsBySellerUseCase()) {
@@ -48,7 +54,7 @@ class PreviewViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _uiState.value = _uiState.value.copy(isLoading = false)
-                    emitEffect(PreviewUiEffect.ShowToastError(result.error ?: "Error desconocido"))
+                    emitEffect(SearchUiEffect.ShowToastError(result.error ?: "Error desconocido"))
                 }
 
                 is Resource.Loading -> {
@@ -70,7 +76,7 @@ class PreviewViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _uiState.value = _uiState.value.copy(isLoading = false)
-                    emitEffect(PreviewUiEffect.ShowToastError(result.error ?: "Error desconocido"))
+                    emitEffect(SearchUiEffect.ShowToastError(result.error ?: "Error desconocido"))
                 }
 
                 is Resource.Loading -> {
@@ -79,13 +85,9 @@ class PreviewViewModel @Inject constructor(
             }
         }
     }
-
-    private fun emitEffect(effect: PreviewUiEffect) = viewModelScope.launch(dispatcherProvider.mainImmediate) {
+*/
+    private fun emitEffect(effect: SearchUiEffect) = viewModelScope.launch(dispatcherProvider.mainImmediate) {
         _eventFlow.emit(effect)
-    }
-
-    private fun setupLoading(value: Boolean) {
-        _uiState.value = _uiState.value.copy(isLoading = value)
     }
 
 }

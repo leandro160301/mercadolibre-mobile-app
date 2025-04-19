@@ -2,7 +2,8 @@ package com.jws.jwsapi.feature_preview.presentation.epoxy
 
 import com.airbnb.epoxy.TypedEpoxyController
 import com.jws.jwsapi.feature_preview.domain.preview.Preview
-import com.jws.jwsapi.feature_preview.presentation.PreviewUiState
+import com.jws.jwsapi.feature_preview.presentation.viewmodel.PreviewUiState
+import com.jws.jwsapi.feature_search.presentation.epoxy.ListSearchModel
 
 class PreviewEpoxyController(
     private val onPreviewSelected: (preview: Preview) -> Unit
@@ -17,8 +18,15 @@ class PreviewEpoxyController(
             return
         }
 
+        if (uiState.previewList.isEmpty()) {
+            NotExistPreviewModel().id("not_exist")
+                .spanSizeOverride { _, _, _ -> 2 }
+                .addTo(this)
+            return
+        }
+
         uiState.previewList.forEachIndexed { index, preview ->
-            ListPreviewModel(
+                ListPreviewModel(
                 preview = preview,
                 onPreviewSelected = onPreviewSelected
             ).id(index)

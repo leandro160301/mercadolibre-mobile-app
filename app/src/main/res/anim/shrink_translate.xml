@@ -1,7 +1,0 @@
-<translate
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="100"
-    android:fromXDelta="0"
-    android:toXDelta="@dimen/delta_x"
-    android:fromYDelta="0"
-    android:toYDelta="@dimen/delta_y" />

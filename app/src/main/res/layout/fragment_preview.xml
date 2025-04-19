@@ -6,43 +6,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- Layout amarillo con el buscador -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/amarillo"
         android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/iconSearch"
-            android:layout_width="29dp"
-            android:layout_height="29dp"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="Buscar"
-            android:src="@drawable/icon_search"
-            android:tint="@color/gris"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextSearch"
-            app:layout_constraintEnd_toStartOf="@+id/editTextSearch"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <EditText
             android:id="@+id/editTextSearch"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:background="@drawable/campollenarclickeableceropadding_selector"
+            android:focusable="false"
             android:hint="Buscar"
-            android:inputType="text"
-            android:background="@drawable/stylekeycor3"
-            android:paddingStart="12dp"
+            android:inputType="none"
+            android:paddingStart="48dp"
             android:paddingEnd="12dp"
             android:textColor="@android:color/black"
-            android:textColorHint="@android:color/darker_gray"
-            app:layout_constraintStart_toEndOf="@id/iconSearch"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="8dp"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:textColorHint="@android:color/darker_gray" />
+
+        <ImageView
+            android:id="@+id/iconSearch"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginStart="12dp"
+            android:src="@drawable/icon_search"
+            android:tint="@color/gris"
+            android:contentDescription="Buscar" />
+    </FrameLayout>
 
     <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/epoxyRecyclerView"

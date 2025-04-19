@@ -111,38 +111,10 @@
 
     </style>
 
-    <style name="MyDatePicker" parent="android:Widget.Material.Light.DatePicker">
-        <item name="android:textColorPrimary">#FFFFFF</item>
-    </style>
-
-
-
-    <style name="checkbox" parent="android:Theme.Holo">
-        <item name="android:textColor">@color/blanco</item>
-    </style>
-
     <style name="RecyclerViewStyle">
         <item name="android:scrollbars">vertical</item>
         <item name="android:fadeScrollbars">false</item>
     </style>
-
-    <style name="BubbleToastAnimation">
-        <item name="android:windowEnterAnimation">@anim/bubble_in</item>
-        <item name="android:windowExitAnimation">@anim/bubble_out</item>
-    </style>
-
-        <style name="Gpio">
-            <item name="android:layout_width">0dp</item>
-            <item name="android:layout_height">0dp</item>
-            <item name="android:layout_margin">4dp</item>
-            <item name="android:textSize">28sp</item>
-            <item name="android:gravity">center</item>
-            <item name="android:background">@drawable/square_background_off</item>
-            <item name="android:textColor">#FFFFFF</item>
-            <item name="android:layout_rowWeight">1</item>
-            <item name="android:layout_columnWeight">1</item>
-        </style>
-
 
 
 </resources>
