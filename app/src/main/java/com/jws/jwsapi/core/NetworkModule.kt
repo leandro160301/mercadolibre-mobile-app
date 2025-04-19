@@ -1,5 +1,6 @@
 package com.jws.jwsapi.core
 
+import com.jws.jwsapi.Constants.BASE_URL
 import com.jws.jwsapi.feature_preview.domain.items.ItemsApi
 import com.jws.jwsapi.feature_preview.domain.preview.PreviewApi
 import dagger.Module
@@ -18,7 +19,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.mercadolibre.com/")
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
