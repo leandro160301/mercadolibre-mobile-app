@@ -14,7 +14,7 @@
         android:layout_height="@dimen/icon_size_normal"
         android:layout_marginStart="@dimen/padding_margin_normal"
         android:layout_marginEnd="8dp"
-        android:src="@drawable/ic_time"
+        android:src="@drawable/ic_restore"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/text_view_query"
         app:layout_constraintStart_toStartOf="parent"

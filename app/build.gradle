@@ -52,14 +52,13 @@ android {
         enabled = true
     }
     packagingOptions {
-        exclude 'META-INF/LICENSE.md'  // Excluye el archivo LICENSE.md duplicado
-        exclude 'META-INF/NOTICE.md'   // Excluye el archivo NOTICE.md duplicado
+        exclude 'META-INF/LICENSE.md'
+        exclude 'META-INF/NOTICE.md'
     }
-
 }
 
 kotlin {
-    jvmToolchain(17) // Use the same Java version as the targetCompatibility
+    jvmToolchain(17)
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
@@ -74,8 +73,7 @@ repositories{
 dependencies {
 
     implementation 'com.android.volley:volley:1.2.1'
-    implementation files('libs\\openbeans-1.0.jar')
-    implementation files('libs\\jxl.jar')
+
     testImplementation 'org.mockito:mockito-core:5.4.0'
     testImplementation "io.mockk:mockk:1.13.10"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3"
@@ -103,24 +101,14 @@ dependencies {
     implementation "androidx.core:core-ktx:1.6.0"
     implementation 'androidx.appcompat:appcompat:1.2.0-beta01'
     implementation 'androidx.appcompat:appcompat-resources:1.2.0-beta01'
-    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.8.1'
-    implementation 'org.apache.poi:poi:5.2.3'
-    implementation 'org.apache.poi:poi-ooxml:5.2.3'
-    implementation("org.apache.commons:commons-compress:1.21")
-    implementation 'org.apache.commons:commons-csv:1.9.0'
     implementation 'com.google.code.gson:gson:2.3'
     implementation 'com.fasterxml:aalto-xml:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
-    implementation files('libs\\commons-net-2.2-ftp.jar')
-    implementation files('libs\\ftplet-api-1.1.1.jar')
-    implementation files('libs\\mina-core-2.0.16.jar')
-    implementation files('libs\\sun-common-server.jar')
     implementation 'com.google.android.gms:play-services-fido:19.0.1'
     implementation 'com.google.code.gson:gson:2.8.8'
     implementation 'io.github.java-native:jssc:2.9.4'
-    implementation files('libs\\comm-2.0.jar')
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'

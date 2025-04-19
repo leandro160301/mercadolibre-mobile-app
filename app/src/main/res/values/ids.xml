@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="epoxy_viewbinding" type="id" />
-    <item name="spinner_user_interaction" type="id"/>
 </resources>

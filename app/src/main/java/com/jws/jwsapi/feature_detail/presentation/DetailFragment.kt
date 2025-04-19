@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.jws.jwsapi.databinding.FragmentDetailBinding
 import com.jws.jwsapi.databinding.FragmentSearchBinding
 import com.jws.jwsapi.shared.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailFragment : BaseFragment<FragmentSearchBinding>() {
+class DetailFragment : BaseFragment<FragmentDetailBinding>() {
 /*    private val viewModel: FileViewModel by viewModels()
     private var controller: FileEpoxyController? = null*/
 
@@ -67,6 +68,6 @@ class DetailFragment : BaseFragment<FragmentSearchBinding>() {
     private fun setupUI() = FileUiHelper.applyFadeAnimation(binding.lnData)*/
 
     override fun initBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        FragmentSearchBinding.inflate(inflater, container, false)
+        FragmentDetailBinding.inflate(inflater, container, false)
 
 }
