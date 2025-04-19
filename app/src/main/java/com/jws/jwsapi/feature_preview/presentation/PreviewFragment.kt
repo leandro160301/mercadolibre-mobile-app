@@ -4,53 +4,60 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
+import com.jws.jwsapi.R
+import com.jws.jwsapi.databinding.FragmentPreviewBinding
 import com.jws.jwsapi.databinding.FragmentSearchBinding
+import com.jws.jwsapi.feature_preview.presentation.epoxy.PreviewEpoxyController
 import com.jws.jwsapi.shared.BaseFragment
+import com.jws.jwsapi.utils.ToastHelper
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PreviewFragment : BaseFragment<FragmentSearchBinding>() {
-/*    private val viewModel: FileViewModel by viewModels()
-    private var controller: FileEpoxyController? = null*/
+class PreviewFragment : BaseFragment<FragmentPreviewBinding>() {
+    private val viewModel: PreviewViewModel by viewModels()
+    private var controller: PreviewEpoxyController? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-   /*     setupUI()
         setupRecyclerView()
         setOnClickListener()
-        observeUiState()*/
+        observeUiState()
     }
 
-/*    fun openDetailsScreen() {
+    fun openDetailsScreen() {
         val action = PreviewFragmentDirections
             .actionPreviewFragmentToDetailFragment(productId = "MLA123456")
         findNavController().navigate(action)
-    }*/
+    }
 
-/*
     private fun setupRecyclerView() {
         setupAdapter()
         setupEpoxyView()
     }
 
     private fun setOnClickListener() {
-        binding.headerContainer.setOnClickListener { viewModel.onEvent(FileUiEvent.GoBackToStorageList) }
-        binding.btTransfer.setOnClickListener { viewModel.onEvent(FileUiEvent.FinishActionFile) }
+/*        binding.headerContainer.setOnClickListener { viewModel.onEvent(FileUiEvent.GoBackToStorageList) }
+        binding.btTransfer.setOnClickListener { viewModel.onEvent(FileUiEvent.FinishActionFile) }*/
     }
 
     private fun setupAdapter() {
-        controller = FileEpoxyController(
-            onFileSelected = { FileUiHelper.showFileDialog(it, requireContext(), viewModel) },
-            onStorageClick = {
-                lifecycleScope.launch { viewModel.onEvent(FileUiEvent.FetchFiles(it)) }
-            }).also {
+        controller = PreviewEpoxyController(
+            onPreviewSelected = { /*FileUiHelper.showFileDialog(it, requireContext(), viewModel)*/ }
+        ).also {
             binding.epoxyRecyclerView.setController(it)
         }
     }
 
     private fun setupEpoxyView() {
-        val spanCount = 4
+        val spanCount = 2
         val gridLayoutManager = GridLayoutManager(requireContext(), spanCount)
         binding.epoxyRecyclerView.layoutManager = gridLayoutManager
         binding.epoxyRecyclerView.itemAnimator = DefaultItemAnimator()
@@ -64,17 +71,19 @@ class PreviewFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     private suspend fun handleEventFlow(): Nothing = viewModel.eventFlow.collect { event ->
-        getMainView()?.let { FileUiHelper.handleEvent(event, requireContext(), it) }
+        when(event) {
+            is PreviewUiEffect.ShowToastError -> ToastHelper.message(event.error, R.layout.item_customtoasterror, requireContext())
+            is PreviewUiEffect.ShowToastMessage -> {
+                /*TODO()*/
+            }
+        }
     }
 
-    private fun processUiState(state: FileUiState?) = state?.let {
+    private fun processUiState(state: PreviewUiState?) = state?.let {
         controller?.setData(it)
-        FileUiHelper.updateUI(binding, state)
     }
-
-    private fun setupUI() = FileUiHelper.applyFadeAnimation(binding.lnData)*/
 
     override fun initBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        FragmentSearchBinding.inflate(inflater, container, false)
+        FragmentPreviewBinding.inflate(inflater, container, false)
 
 }

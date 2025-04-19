@@ -1,10 +1,12 @@
 package com.jws.jwsapi.feature_preview.domain.preview
 
+import com.google.gson.annotations.SerializedName
+
 data class Picture(
-    val id: String,
-    val max_size: String,
-    val quality: String,
-    val secure_url: String,
-    val size: String,
-    val url: String
+    @SerializedName("id") val id: String,
+    @SerializedName("max_size") val maxSize: String,
+    @SerializedName("quality") val quality: String,
+    @SerializedName("secure_url") val secureUrl: String,
+    @SerializedName("size") val size: String,
+    @SerializedName("url") val url: String
 )

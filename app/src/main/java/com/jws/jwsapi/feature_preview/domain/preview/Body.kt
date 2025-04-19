@@ -1,13 +1,14 @@
 package com.jws.jwsapi.feature_preview.domain.preview
 
+import com.google.gson.annotations.SerializedName
+
 data class Body(
-    val accepts_mercadopago: Boolean,
-    val available_quantity: Int,
-    val base_price: Int,
-    val condition: String,
-    val permalink: String,
-    val pictures: List<Picture>,
-    val price: Int,
-    val title: String,
-    val warranty: String
+    @SerializedName("accepts_mercadopago") val acceptsMercadopago: Boolean,
+    @SerializedName("available_quantity") val availableQuantity: Int,
+    @SerializedName("base_price") val basePrice: Int,
+    @SerializedName("condition") val condition: String,
+    @SerializedName("pictures") val pictures: List<Picture>,
+    @SerializedName("price") val price: Int,
+    @SerializedName("title") val title: String,
+    @SerializedName("warranty") val warranty: String
 )

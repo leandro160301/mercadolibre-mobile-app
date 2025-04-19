@@ -5,15 +5,30 @@ import com.jws.jwsapi.Constants.VENDOR_ID
 import com.jws.jwsapi.feature_preview.domain.PreviewRepository
 import com.jws.jwsapi.feature_preview.domain.items.ItemsApi
 import com.jws.jwsapi.feature_preview.domain.items.ItemsResponse
+import com.jws.jwsapi.feature_preview.domain.preview.Preview
+import com.jws.jwsapi.feature_preview.domain.preview.PreviewApi
 import com.jws.jwsapi.shared.Resource
+import retrofit2.Response
 import javax.inject.Inject
 
 class PreviewRepositoryImpl @Inject constructor(
-    private val itemsApi: ItemsApi
+    private val itemsApi: ItemsApi,
+    private val previewApi: PreviewApi
 ): PreviewRepository {
+
     override suspend fun getItemsBySeller(): Resource<ItemsResponse> {
+        return getApiResponse { itemsApi.getItemsBySeller(VENDOR_ID, "Bearer $TOKEN") }
+    }
+
+    override suspend fun getItemsDetails(ids: String): Resource<List<Preview>> {
+        return getApiResponse { previewApi.getItemsDetails(ids, "Bearer $TOKEN") }
+    }
+
+    private suspend fun <T> getApiResponse(
+        apiCall: suspend () -> Response<T>
+    ): Resource<T> {
         return try {
-            val response = itemsApi.getItemsBySeller(VENDOR_ID, "Bearer $TOKEN")
+            val response = apiCall()
             if (response.isSuccessful) {
                 Resource.Success(response.body())
             } else {
