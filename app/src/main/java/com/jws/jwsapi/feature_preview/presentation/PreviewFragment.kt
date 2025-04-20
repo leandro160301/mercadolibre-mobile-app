@@ -39,13 +39,18 @@ class PreviewFragment : BaseFragment<FragmentPreviewBinding>() {
         fetchItems(query)
     }
 
+    private fun setupUi(state: PreviewUiState) {
+        binding.editTextSearch.setText(if (state.query.isNullOrEmpty()) "" else state.query)
+        binding.btDelete.visibility = if (state.deleteButtonIsVisible) View.VISIBLE else View.GONE
+    }
+
     private fun fetchItems(query: String?) {
         viewModel.onEvent(PreviewUiEvent.FetchItems(query))
     }
 
-    fun openDetailsScreen() {
+    private fun openDetailsScreen(productId: String) {
         val action = PreviewFragmentDirections
-            .actionPreviewFragmentToDetailFragment(productId = "MLA123456")
+            .actionPreviewFragmentToDetailFragment(productId = productId)
         findNavController().navigate(action)
     }
 
@@ -56,6 +61,7 @@ class PreviewFragment : BaseFragment<FragmentPreviewBinding>() {
 
     private fun setOnClickListener() {
         binding.editTextSearch.setOnClickListener { viewModel.onEvent(PreviewUiEvent.RequestNavigateToSearch) }
+        binding.btDelete.setOnClickListener { viewModel.onEvent(PreviewUiEvent.OnDeleteSearchClicked) }
     }
 
     private fun setupAdapter() {
@@ -80,20 +86,27 @@ class PreviewFragment : BaseFragment<FragmentPreviewBinding>() {
         }
     }
 
-    private suspend fun handleEventFlow(): Nothing = viewModel.eventFlow.collect { event ->
+    private suspend fun handleEventFlow(): Unit = viewModel.eventFlow.collect { event ->
         when(event) {
-            is PreviewUiEffect.ShowToastError -> ToastHelper.message(event.error, R.layout.item_customtoasterror, requireContext())
-            is PreviewUiEffect.ShowToastMessage ->  ToastHelper.message(event.message, R.layout.item_customtoastok, requireContext())
-            is PreviewUiEffect.NavigateToSearch -> {
-                val action = PreviewFragmentDirections
-                    .actionPreviewFragmentToSearchFragment()
-                findNavController().navigate(action)
-            }
+            is PreviewUiEffect.ShowToastError -> ToastHelper.message(event.error, R.layout.toast_error, requireContext())
+            is PreviewUiEffect.ShowToastMessage ->  ToastHelper.message(event.message, R.layout.toast_success, requireContext())
+            is PreviewUiEffect.NavigateToSearch -> navigateToSearch()
+            is PreviewUiEffect.NavigateToDetails -> openDetailsScreen(productId = event.productId)
+            PreviewUiEffect.OnDeleteSearchClicked -> viewModel.onEvent(PreviewUiEvent.FetchItems())
         }
     }
 
-    private fun processUiState(state: PreviewUiState?) = state?.let {
-        controller?.setData(it)
+    private fun navigateToSearch() {
+        val action = PreviewFragmentDirections
+            .actionPreviewFragmentToSearchFragment()
+        findNavController().navigate(action)
+    }
+
+    private fun processUiState(state: PreviewUiState?) {
+        state?.let  {
+            controller?.setData(it)
+            setupUi(state)
+        }
     }
 
     override fun initBinding(inflater: LayoutInflater, container: ViewGroup?) =

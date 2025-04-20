@@ -4,68 +4,76 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.jws.jwsapi.R
 import com.jws.jwsapi.databinding.FragmentDetailBinding
-import com.jws.jwsapi.databinding.FragmentSearchBinding
+import com.jws.jwsapi.feature_detail.domain.Detail
+import com.jws.jwsapi.feature_preview.presentation.viewmodel.PreviewUiEffect
+import com.jws.jwsapi.feature_preview.presentation.viewmodel.PreviewUiEvent
 import com.jws.jwsapi.shared.BaseFragment
+import com.jws.jwsapi.utils.ToastHelper
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailFragment : BaseFragment<FragmentDetailBinding>() {
-/*    private val viewModel: FileViewModel by viewModels()
-    private var controller: FileEpoxyController? = null*/
+    private val viewModel: DetailViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-   /*     setupUI()
-        setupRecyclerView()
+        val args: DetailFragmentArgs by navArgs()
+        val productId = args.productId
         setOnClickListener()
-        observeUiState()*/
+        observeUiState()
+        fetchDetails(productId)
     }
-/*
-    private fun setupRecyclerView() {
-        setupAdapter()
-        setupEpoxyView()
+
+    private fun fetchDetails(productId: String) {
+        viewModel.onEvent(DetailUiEvent.FetchDetails(productId))
+    }
+
+    private fun navigateToSearch() {
+        val action =  DetailFragmentDirections
+            .actionDetailFragmentToSearchFragment()
+        findNavController().navigate(action)
     }
 
     private fun setOnClickListener() {
-        binding.headerContainer.setOnClickListener { viewModel.onEvent(FileUiEvent.GoBackToStorageList) }
-        binding.btTransfer.setOnClickListener { viewModel.onEvent(FileUiEvent.FinishActionFile) }
+        binding.buttonBack.setOnClickListener { viewModel.onEvent(DetailUiEvent.OnBackClicked) }
+        binding.editTextSearch.setOnClickListener { viewModel.onEvent(DetailUiEvent.RequestNavigateToSearch) }
     }
 
-    private fun setupAdapter() {
-        controller = FileEpoxyController(
-            onFileSelected = { FileUiHelper.showFileDialog(it, requireContext(), viewModel) },
-            onStorageClick = {
-                lifecycleScope.launch { viewModel.onEvent(FileUiEvent.FetchFiles(it)) }
-            }).also {
-            binding.epoxyRecyclerView.setController(it)
-        }
-    }
-
-    private fun setupEpoxyView() {
-        val spanCount = 4
-        val gridLayoutManager = GridLayoutManager(requireContext(), spanCount)
-        binding.epoxyRecyclerView.layoutManager = gridLayoutManager
-        binding.epoxyRecyclerView.itemAnimator = DefaultItemAnimator()
-    }
 
     private fun observeUiState() = viewLifecycleOwner.lifecycleScope.launch {
         viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            launch { viewModel.uiState.collect(::processUiState) }
+//            launch { viewModel.uiState.collect(::processUiState) }
             launch { handleEventFlow() }
         }
     }
 
-    private suspend fun handleEventFlow(): Nothing = viewModel.eventFlow.collect { event ->
-        getMainView()?.let { FileUiHelper.handleEvent(event, requireContext(), it) }
+    private suspend fun handleEventFlow(): Unit = viewModel.eventFlow.collect { event ->
+        when(event) {
+            is DetailUiEffect.ShowToastError -> ToastHelper.message(event.error, R.layout.toast_error, requireContext())
+            is DetailUiEffect.ShowToastMessage ->  ToastHelper.message(event.message, R.layout.toast_success, requireContext())
+            is DetailUiEffect.NavigateToSearch -> { navigateToSearch() }
+            is DetailUiEffect.OnBackClicked -> { backClick() }
+        }
     }
 
+    private fun backClick() = parentFragmentManager.popBackStack()
+
+/*
     private fun processUiState(state: FileUiState?) = state?.let {
         controller?.setData(it)
         FileUiHelper.updateUI(binding, state)
     }
+*/
 
-    private fun setupUI() = FileUiHelper.applyFadeAnimation(binding.lnData)*/
 
     override fun initBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentDetailBinding.inflate(inflater, container, false)

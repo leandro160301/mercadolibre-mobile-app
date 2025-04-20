@@ -1,8 +1,7 @@
 package com.jws.jwsapi.core
 
 import com.jws.jwsapi.Constants.BASE_URL
-import com.jws.jwsapi.feature_preview.domain.items.ItemsApi
-import com.jws.jwsapi.feature_preview.domain.preview.PreviewApi
+import com.jws.jwsapi.feature_preview.domain.PreviewApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,15 +23,4 @@ object NetworkModule {
             .build()
     }
 
-    @Provides
-    @Singleton
-    fun provideItemsApi(retrofit: Retrofit): ItemsApi {
-        return retrofit.create(ItemsApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun providePreviewApi(retrofit: Retrofit): PreviewApi {
-        return retrofit.create(PreviewApi::class.java)
-    }
 }

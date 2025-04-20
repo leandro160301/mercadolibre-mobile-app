@@ -15,8 +15,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.jws.jwsapi.R
 import com.jws.jwsapi.databinding.FragmentSearchBinding
-import com.jws.jwsapi.feature_preview.presentation.epoxy.PreviewEpoxyController
-import com.jws.jwsapi.feature_preview.presentation.viewmodel.PreviewUiEvent
 import com.jws.jwsapi.feature_search.presentation.epoxy.SearchEpoxyController
 import com.jws.jwsapi.shared.BaseFragment
 import com.jws.jwsapi.utils.ToastHelper
@@ -66,23 +64,25 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         controller?.setData(it)
     }
 
-    private suspend fun handleEventFlow(): Nothing = viewModel.eventFlow.collect { event ->
+    private suspend fun handleEventFlow(): Unit = viewModel.eventFlow.collect { event ->
         when(event) {
-            is SearchUiEffect.NavigateToPreview -> {
-                val action = SearchFragmentDirections
-                    .actionSearchFragmentToPreviewFragment(query = event.value)
-                findNavController().navigate(action)
-            }
-            is SearchUiEffect.ShowToastError -> ToastHelper.message(event.error, R.layout.item_customtoastok, requireContext())
-            is SearchUiEffect.ShowToastMessage -> ToastHelper.message(event.message, R.layout.item_customtoastok, requireContext())
+            is SearchUiEffect.NavigateToPreview -> { navigateToPreview(event) }
+            is SearchUiEffect.ShowToastError -> ToastHelper.message(event.error, R.layout.toast_success, requireContext())
+            is SearchUiEffect.ShowToastMessage -> ToastHelper.message(event.message, R.layout.toast_success, requireContext())
+            SearchUiEffect.OnCancelClicked -> cancelClick()
         }
     }
 
+    private fun navigateToPreview(event: SearchUiEffect.NavigateToPreview) {
+        val action = SearchFragmentDirections
+            .actionSearchFragmentToPreviewFragment(query = event.value)
+        findNavController().navigate(action)
+    }
+
     private fun setOnClickListener() {
-        binding.btnCancel.setOnClickListener {
-            parentFragmentManager.popBackStack()
-        }
-        binding.editTextSearch.setOnEditorActionListener { v, actionId, event ->
+        binding.btnCancel.setOnClickListener { viewModel.onEvent(SearchUiEvent.OnCancelClicked) }
+
+        binding.editTextSearch.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE ||
                 event?.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
                 viewModel.onEvent(SearchUiEvent.RequestNavigateToPreview(binding.editTextSearch.text.toString()))
@@ -90,6 +90,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             } else { false }
         }
     }
+
+    private fun cancelClick() = parentFragmentManager.popBackStack()
 
     override fun initBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentSearchBinding.inflate(inflater, container, false)

@@ -16,7 +16,7 @@
             android:id="@+id/editTextSearch"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@drawable/campollenarclickeableceropadding_selector"
+            android:background="@drawable/search_style"
             android:focusable="false"
             android:hint="Buscar"
             android:inputType="none"
@@ -34,6 +34,16 @@
             android:src="@drawable/icon_search"
             android:tint="@color/gris"
             android:contentDescription="Buscar" />
+
+        <ImageView
+            android:id="@+id/btDelete"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="12dp"
+            android:contentDescription="Buscar"
+            android:src="@drawable/ic_close"
+            android:tint="@color/gris" />
     </FrameLayout>
 
     <com.airbnb.epoxy.EpoxyRecyclerView

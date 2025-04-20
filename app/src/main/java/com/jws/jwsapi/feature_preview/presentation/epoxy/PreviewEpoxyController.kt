@@ -6,7 +6,7 @@ import com.jws.jwsapi.feature_preview.presentation.viewmodel.PreviewUiState
 import com.jws.jwsapi.feature_search.presentation.epoxy.ListSearchModel
 
 class PreviewEpoxyController(
-    private val onPreviewSelected: (preview: Preview) -> Unit
+    private val onPreviewSelected: (productId: String) -> Unit
 ) : TypedEpoxyController<PreviewUiState>() {
     override fun buildModels(state: PreviewUiState?) {
         val uiState = state ?: return

@@ -10,7 +10,7 @@ import com.jws.jwsapi.utils.ImagePagerAdapter
 
 data class ListPreviewModel(
     private val preview: Preview,
-    private val onPreviewSelected: (preview: Preview) -> Unit,
+    private val onPreviewSelected: (productId: String) -> Unit,
 ) : ViewBindingKotlinModel<ItemPreviewBinding>(R.layout.item_preview) {
 
     @SuppressLint("SetTextI18n")
@@ -25,7 +25,7 @@ data class ListPreviewModel(
         imagePager.adapter = adapter
         imageIndicator.setViewPager(imagePager)
 
-        card.setOnClickListener { onPreviewSelected(preview) }
+        card.setOnClickListener { onPreviewSelected(preview.body.id) }
     }
 
 

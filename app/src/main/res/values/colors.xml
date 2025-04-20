@@ -8,7 +8,7 @@
     <color name="gris2">#D3D3D3</color>
     <color name="rojobrillante">#554545</color>
     <color name="rojo">#D1AAAA</color>
-    <color name="azul">#002AFF</color>
+    <color name="azul">#007BFF</color>
     <color name="violetaclaro">#6800A8</color>
     <color name="violeta">#3E0065</color>
     <color name="violetaoscuro">#25003A</color>
@@ -20,7 +20,7 @@
     <color name="amarillooscuro">#8E8700</color>
     <color name="traslucidoclaro">#41FFFFFF</color>
     <color name="naranja">#FF6F00</color>
-    <color name="verde">#59FF00</color>
+    <color name="verde">#4CAF50</color>
     <color name="blanco">#FFFFFF</color>
     <color name="grisoscuro">#4E4E4E</color>
     <color name="grisoscuromasclaro">#606060</color>

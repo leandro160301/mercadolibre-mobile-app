@@ -26,26 +26,28 @@ class PreviewViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<PreviewUiEffect>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-
     fun onEvent(event: PreviewUiEvent) {
         when (event) {
             is PreviewUiEvent.RequestNavigateToSearch -> navSearch()
-            is PreviewUiEvent.RequestNavigateToDetails -> navDetails()
+            is PreviewUiEvent.RequestNavigateToDetails -> navDetails(event.productId)
             is PreviewUiEvent.FetchItems -> loadItems(event.query)
+            PreviewUiEvent.OnDeleteSearchClicked -> deleteSearch()
         }
     }
 
-    private fun navSearch() {
-        emitEffect(PreviewUiEffect.NavigateToSearch)
-    }
+    private fun navSearch() = emitEffect(PreviewUiEffect.NavigateToSearch)
 
-    private fun navDetails() {
-//        findNavController().navigate(R.id.action_previewFragment_to_searchFragment)
-    }
+    private fun deleteSearch() = emitEffect(PreviewUiEffect.OnDeleteSearchClicked)
+
+    private fun navDetails(id: String) = emitEffect(PreviewUiEffect.NavigateToDetails(id))
 
     private fun loadItems(query: String?) {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
+            _uiState.value = _uiState.value.copy(
+                isLoading = true,
+                query = query,
+                deleteButtonIsVisible = !query.isNullOrEmpty()
+            )
             when (val result = fetchItemsBySellerUseCase(query)) {
                 is Resource.Success -> {
                     _uiState.value = _uiState.value.copy(isLoading = false)

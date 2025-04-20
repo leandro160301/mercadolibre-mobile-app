@@ -32,12 +32,13 @@ class SearchViewModel @Inject constructor(
     fun onEvent(event: SearchUiEvent) {
         when (event) {
             is SearchUiEvent.RequestNavigateToPreview -> navPreview(event.value)
+            SearchUiEvent.OnCancelClicked -> cancelClick()
         }
     }
 
-    private fun navPreview(value: String) {
-        emitEffect(SearchUiEffect.NavigateToPreview(value))
-    }
+    private fun cancelClick() = emitEffect(SearchUiEffect.OnCancelClicked)
+
+    private fun navPreview(value: String) = emitEffect(SearchUiEffect.NavigateToPreview(value))
 
     private fun navDetails() {
 //        findNavController().navigate(R.id.action_previewFragment_to_searchFragment)
