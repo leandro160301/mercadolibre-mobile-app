@@ -1,10 +1,12 @@
 package com.jws.mobile.auth.domain
 
+import com.google.gson.annotations.SerializedName
+
 data class Auth(
-    val access_token: String,
-    val expires_in: Int,
-    val refresh_token: String,
-    val scope: String,
-    val token_type: String,
-    val user_id: Int
+    @SerializedName("access_token") val accessToken: String,
+    @SerializedName("expires_in") val expiresIn: Int,
+    @SerializedName("refresh_token") val refreshToken: String,
+    @SerializedName("scope") val scope: String,
+    @SerializedName("token_type") val tokenType: String,
+    @SerializedName("user_id") val userId: Int
 )

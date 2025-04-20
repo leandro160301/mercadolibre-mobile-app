@@ -3,6 +3,7 @@ apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 34
@@ -143,5 +144,8 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.16.0'
 
     implementation 'me.relex:circleindicator:2.1.6'
+
+    implementation platform('com.google.firebase:firebase-bom:32.7.0') // versión BOM actual
+    implementation 'com.google.firebase:firebase-firestore-ktx'
 
 }

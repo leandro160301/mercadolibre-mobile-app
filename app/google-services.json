@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1026480646027",
+    "project_id": "mercadolibre-candidate",
+    "storage_bucket": "mercadolibre-candidate.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1026480646027:android:21d80c2851ec70db45b18e",
+        "android_client_info": {
+          "package_name": "com.jws.mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDobNEz2TDCvRP9nM69DokxPRmdYG8zB0I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
