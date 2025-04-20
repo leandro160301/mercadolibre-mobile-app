@@ -2,10 +2,10 @@ package com.jws.mobile.feature_preview.presentation.epoxy
 
 import android.annotation.SuppressLint
 import com.jws.mobile.R
-import com.jws.mobile.databinding.ItemPreviewBinding
-import com.jws.mobile.feature_preview.domain.preview.Preview
 import com.jws.mobile.core.helpers.ViewBindingKotlinModel
 import com.jws.mobile.core.utils.ImagePagerAdapter
+import com.jws.mobile.databinding.ItemPreviewBinding
+import com.jws.mobile.feature_preview.domain.preview.Preview
 
 data class ListPreviewModel(
     private val preview: Preview,

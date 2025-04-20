@@ -5,5 +5,6 @@ import javax.inject.Inject
 class FetchPreviewsByIdUseCase @Inject constructor(
     private val previewRepository: PreviewRepository
 ) {
-    suspend operator fun invoke(ids: String) = previewRepository.getItemsDetails(ids)
+    suspend operator fun invoke(ids: List<String>) =
+        previewRepository.getItemsDetails(ids.joinToString(","))
 }

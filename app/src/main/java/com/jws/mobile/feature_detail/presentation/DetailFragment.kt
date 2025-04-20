@@ -11,10 +11,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.jws.mobile.R
-import com.jws.mobile.databinding.FragmentDetailBinding
 import com.jws.mobile.core.ui.BaseFragment
 import com.jws.mobile.core.utils.ImagePagerAdapter
 import com.jws.mobile.core.utils.ToastHelper
+import com.jws.mobile.databinding.FragmentDetailBinding
 import com.jws.mobile.feature_detail.presentation.viewmodel.DetailUiEffect
 import com.jws.mobile.feature_detail.presentation.viewmodel.DetailUiEvent
 import com.jws.mobile.feature_detail.presentation.viewmodel.DetailUiState

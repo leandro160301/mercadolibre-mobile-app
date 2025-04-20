@@ -13,14 +13,14 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.jws.mobile.R
+import com.jws.mobile.core.ui.BaseFragment
+import com.jws.mobile.core.utils.ToastHelper
 import com.jws.mobile.databinding.FragmentPreviewBinding
 import com.jws.mobile.feature_preview.presentation.epoxy.PreviewEpoxyController
 import com.jws.mobile.feature_preview.presentation.viewmodel.PreviewUiEffect
 import com.jws.mobile.feature_preview.presentation.viewmodel.PreviewUiEvent
 import com.jws.mobile.feature_preview.presentation.viewmodel.PreviewUiState
 import com.jws.mobile.feature_preview.presentation.viewmodel.PreviewViewModel
-import com.jws.mobile.core.ui.BaseFragment
-import com.jws.mobile.core.utils.ToastHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -34,18 +34,21 @@ class PreviewFragment : BaseFragment<FragmentPreviewBinding>() {
         val args: PreviewFragmentArgs by navArgs()
         val query = args.query
         setupRecyclerView()
-        setOnClickListener()
+        setupClickListeners()
         observeUiState()
         fetchItems(query)
+
     }
 
     private fun setupUi(state: PreviewUiState) {
-        binding.editTextSearch.setText(if (state.query.isNullOrEmpty()) "" else state.query)
+        binding.editTextSearch.setText(state.query.orEmpty())
         binding.btDelete.visibility = if (state.deleteButtonIsVisible) View.VISIBLE else View.GONE
     }
 
     private fun fetchItems(query: String?) {
-        viewModel.onEvent(PreviewUiEvent.FetchItems(query))
+        if (viewModel.uiState.value.query == null) {
+            viewModel.onEvent(PreviewUiEvent.FetchItems(query))
+        }
     }
 
     private fun openDetailsScreen(productId: String) {
@@ -56,10 +59,10 @@ class PreviewFragment : BaseFragment<FragmentPreviewBinding>() {
 
     private fun setupRecyclerView() {
         setupAdapter()
-        setupEpoxyView()
+        setupLayoutManager()
     }
 
-    private fun setOnClickListener() {
+    private fun setupClickListeners() {
         binding.editTextSearch.setOnClickListener { viewModel.onEvent(PreviewUiEvent.RequestNavigateToSearch) }
         binding.btDelete.setOnClickListener { viewModel.onEvent(PreviewUiEvent.OnDeleteSearchClicked) }
     }
@@ -72,7 +75,7 @@ class PreviewFragment : BaseFragment<FragmentPreviewBinding>() {
         }
     }
 
-    private fun setupEpoxyView() {
+    private fun setupLayoutManager() {
         val spanCount = 2
         val gridLayoutManager = GridLayoutManager(requireContext(), spanCount)
         binding.epoxyRecyclerView.layoutManager = gridLayoutManager
@@ -81,29 +84,34 @@ class PreviewFragment : BaseFragment<FragmentPreviewBinding>() {
 
     private fun observeUiState() = viewLifecycleOwner.lifecycleScope.launch {
         viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            launch { viewModel.uiState.collect(::processUiState) }
-            launch { handleEventFlow() }
+            launch { observeState() }
+            launch { observeEvents() }
         }
     }
 
-    private suspend fun handleEventFlow(): Unit = viewModel.eventFlow.collect { event ->
-        when (event) {
-            is PreviewUiEffect.ShowToastError -> ToastHelper.message(
-                event.error,
-                R.layout.toast_error,
-                requireContext()
-            )
+    private suspend fun observeState() {
+        viewModel.uiState.collect(::processUiState)
+    }
 
-            is PreviewUiEffect.ShowToastMessage -> ToastHelper.message(
-                event.message,
-                R.layout.toast_success,
-                requireContext()
-            )
-
-            is PreviewUiEffect.NavigateToSearch -> navigateToSearch()
-            is PreviewUiEffect.NavigateToDetails -> openDetailsScreen(productId = event.productId)
-            PreviewUiEffect.OnDeleteSearchClicked -> viewModel.onEvent(PreviewUiEvent.FetchItems())
+    private suspend fun observeEvents() {
+        viewModel.eventFlow.collect { event ->
+            when (event) {
+                is PreviewUiEffect.ShowToastError,
+                is PreviewUiEffect.ShowToastMessage -> showToast(event)
+                is PreviewUiEffect.NavigateToSearch -> navigateToSearch()
+                is PreviewUiEffect.NavigateToDetails -> openDetailsScreen(productId = event.productId)
+                is PreviewUiEffect.OnDeleteSearchClicked -> viewModel.onEvent(PreviewUiEvent.FetchItems(query = ""))
+            }
         }
+    }
+
+    private fun showToast(effect: PreviewUiEffect) {
+        val (message, layout) = when (effect) {
+            is PreviewUiEffect.ShowToastError -> effect.error to R.layout.toast_error
+            is PreviewUiEffect.ShowToastMessage -> effect.message to R.layout.toast_success
+            else -> return
+        }
+        ToastHelper.message(message, layout, requireContext())
     }
 
     private fun navigateToSearch() {

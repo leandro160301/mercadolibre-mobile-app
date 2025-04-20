@@ -1,13 +1,13 @@
 package com.jws.mobile.feature_preview.data
 
+import com.jws.mobile.core.network.NetworkResultWrapper
 import com.jws.mobile.core.utils.Constants.TOKEN
 import com.jws.mobile.core.utils.Constants.VENDOR_ID
+import com.jws.mobile.core.utils.Resource
 import com.jws.mobile.feature_preview.domain.PreviewApi
 import com.jws.mobile.feature_preview.domain.PreviewRepository
 import com.jws.mobile.feature_preview.domain.items.ItemsResponse
 import com.jws.mobile.feature_preview.domain.preview.Preview
-import com.jws.mobile.core.network.NetworkResultWrapper
-import com.jws.mobile.core.utils.Resource
 import javax.inject.Inject
 
 class PreviewRepositoryImpl @Inject constructor(

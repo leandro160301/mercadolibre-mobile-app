@@ -2,9 +2,9 @@ package com.jws.mobile.feature_search.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jws.mobile.core.di.DispatcherProvider
 import com.jws.mobile.feature_search.domain.AddRecentSearchUseCase
 import com.jws.mobile.feature_search.domain.GetRecentSearchUseCase
-import com.jws.mobile.core.di.DispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

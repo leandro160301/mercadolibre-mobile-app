@@ -1,9 +1,9 @@
 package com.jws.mobile.feature_search.presentation.epoxy
 
 import com.jws.mobile.R
+import com.jws.mobile.core.helpers.ViewBindingKotlinModel
 import com.jws.mobile.databinding.ItemSearchBinding
 import com.jws.mobile.feature_search.domain.Search
-import com.jws.mobile.core.helpers.ViewBindingKotlinModel
 
 data class ListSearchModel(
     private val search: Search,

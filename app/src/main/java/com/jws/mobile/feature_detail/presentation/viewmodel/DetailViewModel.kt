@@ -2,9 +2,9 @@ package com.jws.mobile.feature_detail.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jws.mobile.feature_detail.domain.FetchDetailByIdUseCase
 import com.jws.mobile.core.di.DispatcherProvider
 import com.jws.mobile.core.utils.Resource
+import com.jws.mobile.feature_detail.domain.FetchDetailByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

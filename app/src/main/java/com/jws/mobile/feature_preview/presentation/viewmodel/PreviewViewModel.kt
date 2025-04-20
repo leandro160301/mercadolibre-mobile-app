@@ -2,10 +2,12 @@ package com.jws.mobile.feature_preview.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jws.mobile.feature_preview.domain.FetchItemsBySellerUseCase
-import com.jws.mobile.feature_preview.domain.FetchPreviewsByIdUseCase
 import com.jws.mobile.core.di.DispatcherProvider
 import com.jws.mobile.core.utils.Resource
+import com.jws.mobile.feature_preview.domain.FetchItemsBySellerUseCase
+import com.jws.mobile.feature_preview.domain.FetchPreviewsByIdUseCase
+import com.jws.mobile.feature_preview.domain.items.ItemsResponse
+import com.jws.mobile.feature_preview.domain.preview.Preview
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,12 +37,6 @@ class PreviewViewModel @Inject constructor(
         }
     }
 
-    private fun navSearch() = emitEffect(PreviewUiEffect.NavigateToSearch)
-
-    private fun deleteSearch() = emitEffect(PreviewUiEffect.OnDeleteSearchClicked)
-
-    private fun navDetails(id: String) = emitEffect(PreviewUiEffect.NavigateToDetails(id))
-
     private fun loadItems(query: String?) {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(
@@ -49,50 +45,54 @@ class PreviewViewModel @Inject constructor(
                 deleteButtonIsVisible = !query.isNullOrEmpty()
             )
             when (val result = fetchItemsBySellerUseCase(query)) {
-                is Resource.Success -> {
-                    _uiState.value = _uiState.value.copy(isLoading = false)
-                    val items = result.data?.results.orEmpty()
-                    loadPreviews(items)
-                }
-
-                is Resource.Error -> {
-                    _uiState.value = _uiState.value.copy(isLoading = false)
-                    emitEffect(PreviewUiEffect.ShowToastError(result.error ?: "Error desconocido"))
-                }
-
-                is Resource.Loading -> {
-                    _uiState.value = _uiState.value.copy(isLoading = true)
-                }
+                is Resource.Success -> handleItemsFetched(result)
+                is Resource.Error -> showError(result)
+                is Resource.Loading -> {}
             }
         }
     }
 
     private fun loadPreviews(items: List<String>) {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
-            when (val result = fetchPreviewsByIdUseCase(items.joinToString(","))) {
-                is Resource.Success -> {
-                    _uiState.value = _uiState.value.copy(isLoading = false)
-                    result.data?.let { items ->
-                        _uiState.value = _uiState.value.copy(previewList = items)
-                    }
-                }
-
-                is Resource.Error -> {
-                    _uiState.value = _uiState.value.copy(isLoading = false)
-                    emitEffect(PreviewUiEffect.ShowToastError(result.error ?: "Error desconocido"))
-                }
-
-                is Resource.Loading -> {
-                    _uiState.value = _uiState.value.copy(isLoading = true)
-                }
+            updateLoadingState(isLoading = true)
+            when (val result = fetchPreviewsByIdUseCase(items)) {
+                is Resource.Success -> handlePreviewsFetched(result)
+                is Resource.Error -> showError(result)
+                is Resource.Loading -> {}
             }
         }
     }
 
-    private fun emitEffect(effect: PreviewUiEffect) =
+    private fun updateLoadingState(isLoading: Boolean) {
+        _uiState.value = _uiState.value.copy(isLoading = isLoading)
+    }
+
+    private fun handleItemsFetched(result: Resource<ItemsResponse>) {
+        updateLoadingState(isLoading = false)
+        val items = result.data?.results.orEmpty()
+        loadPreviews(items)
+    }
+
+    private fun handlePreviewsFetched(result: Resource<List<Preview>>) {
+        updateLoadingState(isLoading = false)
+        result.data?.let { items -> _uiState.value = _uiState.value.copy(previewList = items) }
+    }
+
+    private fun <T> showError(result: Resource<T>) {
+        updateLoadingState(isLoading = false)
+        emitEffect(PreviewUiEffect.ShowToastError(result.error ?: "Error desconocido"))
+    }
+
+    private fun navSearch() = emitEffect(PreviewUiEffect.NavigateToSearch)
+
+    private fun deleteSearch() = emitEffect(PreviewUiEffect.OnDeleteSearchClicked)
+
+    private fun navDetails(id: String) = emitEffect(PreviewUiEffect.NavigateToDetails(id))
+
+    private fun emitEffect(effect: PreviewUiEffect) {
         viewModelScope.launch(dispatcherProvider.mainImmediate) {
             _eventFlow.emit(effect)
         }
+    }
 
 }
