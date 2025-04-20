@@ -1,7 +1,7 @@
 package com.jws.mobile.feature_preview.data
 
+import com.jws.mobile.core.features.TokenManager
 import com.jws.mobile.core.network.NetworkResultWrapper
-import com.jws.mobile.core.utils.Constants.TOKEN
 import com.jws.mobile.core.utils.Constants.VENDOR_ID
 import com.jws.mobile.core.utils.Resource
 import com.jws.mobile.feature_preview.domain.PreviewApi
@@ -16,13 +16,17 @@ class PreviewRepositoryImpl @Inject constructor(
 
     override suspend fun getItemsBySeller(query: String?): Resource<ItemsResponse> {
         return NetworkResultWrapper.getApiResponse {
-            previewApi.getItemsBySeller(VENDOR_ID, "Bearer $TOKEN", query = query)
+            previewApi.getItemsBySeller(
+                VENDOR_ID,
+                "Bearer ${TokenManager.getToken()}",
+                query = query
+            )
         }
     }
 
     override suspend fun getItemsDetails(ids: String): Resource<List<Preview>> {
         return NetworkResultWrapper.getApiResponse {
-            previewApi.getItemsDetails(ids, "Bearer $TOKEN")
+            previewApi.getItemsDetails(ids, "Bearer ${TokenManager.getToken()}")
         }
     }
 

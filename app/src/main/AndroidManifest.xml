@@ -4,10 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name="com.jws.mobile.Application"
@@ -21,7 +17,7 @@
         android:supportsRtl="true">
 
         <activity
-            android:name="com.jws.mobile.SplashActivity"
+            android:name="com.jws.mobile.LauncherActivity"
             android:clearTaskOnLaunch="true"
             android:exported="true"
             android:launchMode="singleTop"

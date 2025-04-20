@@ -4,14 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/amarillo">
+    android:background="@android:color/white">
 
-    <ImageView
-        android:id="@+id/logoImage"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:contentDescription="Logo"
-        android:src="@drawable/meli_logo"
+    <TextView
+        android:id="@+id/textNoResults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Error al iniciar sesion"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

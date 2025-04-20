@@ -22,7 +22,7 @@ object RefreshTokenFirebase {
             }
     }
 
-    fun saveRefreshToken(newToken: String, callback: (Boolean) -> Unit) {
+    fun updateRefreshToken(newToken: String, callback: (Boolean) -> Unit) {
         val db = FirebaseFirestore.getInstance()
 
         val data = hashMapOf(
