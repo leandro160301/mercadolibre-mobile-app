@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.jws.jwsapi.feature_search.presentation.SearchFragment"
+        android:name="com.jws.mobile.feature_search.presentation.SearchFragment"
         android:label="Search" >
         <action
             android:id="@+id/action_searchFragment_to_previewFragment"
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/previewFragment"
-        android:name="com.jws.jwsapi.feature_preview.presentation.PreviewFragment"
+        android:name="com.jws.mobile.feature_preview.presentation.PreviewFragment"
         android:label="Results">
 
         <argument
@@ -34,7 +34,7 @@
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.jws.jwsapi.feature_detail.presentation.DetailFragment"
+        android:name="com.jws.mobile.feature_detail.presentation.DetailFragment"
         android:label="Detail">
         <argument
             android:name="productId"

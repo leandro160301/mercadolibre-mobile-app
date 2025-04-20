@@ -3,19 +3,7 @@
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#FFFFFF</item>
         <item name="colorPrimaryDark">#FFFFFF</item>
-        <item name="principal_fondo">#FAF4E5</item>
-        <item name="info_principal_fondo">#B6B6B6</item>
         <item name="colorAccent">#FFFFFF</item>
-        <item name="gregorutti_color">#9F0000</item>
-        <item name="gregorutti_color_claro">#FF0000</item>
-        <item name="gregorutti_color_oscuro">#5C0000</item>
-        <item name="colorSurface">#FFEB3B</item>
-        <item name="recyclerViewStyle">@style/RecyclerViewStyle</item>
-    </style>
-
-    <style name="RecyclerViewStyle">
-        <item name="android:scrollbars">vertical</item>
-        <item name="android:fadeScrollbars">false</item>
     </style>
 
 </resources>

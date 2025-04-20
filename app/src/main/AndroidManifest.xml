@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.jws.jwsapi">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -11,9 +10,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-        android:name=".Application"
+        android:name="com.jws.mobile.Application"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher_grego"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:usesCleartextTraffic="true"
@@ -22,7 +21,7 @@
         android:supportsRtl="true">
 
         <activity
-            android:name="com.jws.jwsapi.SplashActivity"
+            android:name="com.jws.mobile.SplashActivity"
             android:clearTaskOnLaunch="true"
             android:exported="true"
             android:launchMode="singleTop"
@@ -39,7 +38,7 @@
 
 
         <activity
-            android:name="com.jws.jwsapi.MainActivity"
+            android:name="com.jws.mobile.MainActivity"
             android:clearTaskOnLaunch="true"
             android:exported="true"
             android:largeHeap="true"
