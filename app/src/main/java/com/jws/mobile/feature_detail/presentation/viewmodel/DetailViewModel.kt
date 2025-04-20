@@ -24,39 +24,34 @@ class DetailViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<DetailUiEffect>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+    private var hasFetched = false
+
     fun onEvent(event: DetailUiEvent) {
         when (event) {
             is DetailUiEvent.RequestNavigateToSearch -> navSearch()
-            is DetailUiEvent.RequestNavigateToDetails -> navDetails()
             is DetailUiEvent.FetchDetails -> loadItems(event.id)
-            DetailUiEvent.OnBackClicked -> backClick()
+            is DetailUiEvent.OnBackClicked -> backClick()
         }
     }
 
     private fun backClick() = emitEffect(DetailUiEffect.OnBackClicked)
 
-    private fun navSearch() {
-        emitEffect(DetailUiEffect.NavigateToSearch)
-    }
-
-    private fun navDetails() {
-//        findNavController().navigate(R.id.action_previewFragment_to_searchFragment)
-    }
+    private fun navSearch() = emitEffect(DetailUiEffect.NavigateToSearch)
 
     private fun loadItems(id: String) {
+        if (hasFetched) return
+
         viewModelScope.launch {
+            hasFetched = true
             _uiState.value = _uiState.value.copy(isLoading = true)
             when (val result = fetchDetailByIdUseCase(id)) {
                 is Resource.Success -> {
-                    _uiState.value =
-                        _uiState.value.copy(isLoading = false, previewList = result.data)
+                    _uiState.value = _uiState.value.copy(isLoading = false, detail = result.data)
                 }
-
                 is Resource.Error -> {
                     _uiState.value = _uiState.value.copy(isLoading = false)
                     emitEffect(DetailUiEffect.ShowToastError(result.error ?: "Error desconocido"))
                 }
-
                 is Resource.Loading -> {
                     _uiState.value = _uiState.value.copy(isLoading = true)
                 }
@@ -64,10 +59,9 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-
-    private fun emitEffect(effect: DetailUiEffect) =
+    private fun emitEffect(effect: DetailUiEffect) {
         viewModelScope.launch(dispatcherProvider.mainImmediate) {
             _eventFlow.emit(effect)
         }
-
+    }
 }

@@ -9,12 +9,6 @@ class SearchEpoxyController(
     override fun buildModels(state: SearchUiState?) {
         val uiState = state ?: return
 
-        /*if (uiState.isLoading) {
-            LoadingPreviewModel().id("loading")
-                .addTo(this)
-            return
-        }*/
-
         uiState.search.forEachIndexed { index, search ->
             ListSearchModel(
                 search = search,

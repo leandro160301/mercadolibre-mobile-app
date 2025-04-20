@@ -1,4 +1,4 @@
-package com.jws.mobile.shared
+package com.jws.mobile.core
 
 import com.jws.mobile.core.di.DispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher

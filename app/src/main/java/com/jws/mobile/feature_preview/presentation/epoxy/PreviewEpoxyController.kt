@@ -1,6 +1,7 @@
 package com.jws.mobile.feature_preview.presentation.epoxy
 
 import com.airbnb.epoxy.TypedEpoxyController
+import com.jws.mobile.core.ui.epoxy.LoadingModel
 import com.jws.mobile.feature_preview.presentation.viewmodel.PreviewUiState
 
 class PreviewEpoxyController(
@@ -10,7 +11,7 @@ class PreviewEpoxyController(
         val uiState = state ?: return
 
         if (uiState.isLoading) {
-            LoadingPreviewModel().id("loading")
+            LoadingModel().id("loading")
                 .spanSizeOverride { _, _, _ -> 2 }
                 .addTo(this)
             return

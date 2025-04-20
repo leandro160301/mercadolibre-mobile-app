@@ -12,9 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
-import com.jws.mobile.R
 import com.jws.mobile.core.ui.BaseFragment
-import com.jws.mobile.core.utils.ToastHelper
+import com.jws.mobile.core.ui.ToastEffect.showToast
 import com.jws.mobile.databinding.FragmentPreviewBinding
 import com.jws.mobile.feature_preview.presentation.epoxy.PreviewEpoxyController
 import com.jws.mobile.feature_preview.presentation.viewmodel.PreviewUiEffect
@@ -97,21 +96,12 @@ class PreviewFragment : BaseFragment<FragmentPreviewBinding>() {
         viewModel.eventFlow.collect { event ->
             when (event) {
                 is PreviewUiEffect.ShowToastError,
-                is PreviewUiEffect.ShowToastMessage -> showToast(event)
+                is PreviewUiEffect.ShowToastMessage -> showToast(event, requireContext())
                 is PreviewUiEffect.NavigateToSearch -> navigateToSearch()
                 is PreviewUiEffect.NavigateToDetails -> openDetailsScreen(productId = event.productId)
                 is PreviewUiEffect.OnDeleteSearchClicked -> viewModel.onEvent(PreviewUiEvent.FetchItems(query = ""))
             }
         }
-    }
-
-    private fun showToast(effect: PreviewUiEffect) {
-        val (message, layout) = when (effect) {
-            is PreviewUiEffect.ShowToastError -> effect.error to R.layout.toast_error
-            is PreviewUiEffect.ShowToastMessage -> effect.message to R.layout.toast_success
-            else -> return
-        }
-        ToastHelper.message(message, layout, requireContext())
     }
 
     private fun navigateToSearch() {

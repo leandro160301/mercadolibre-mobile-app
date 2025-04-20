@@ -41,6 +41,7 @@
             android:layout_height="24dp"
             android:layout_gravity="end|center_vertical"
             android:layout_marginEnd="12dp"
+            android:background="@drawable/search_style"
             android:contentDescription="Buscar"
             android:src="@drawable/ic_close"
             android:tint="@color/gris" />

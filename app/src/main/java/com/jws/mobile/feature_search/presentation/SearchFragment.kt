@@ -13,9 +13,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.jws.mobile.R
 import com.jws.mobile.core.ui.BaseFragment
-import com.jws.mobile.core.utils.ToastHelper
+import com.jws.mobile.core.ui.ToastEffect.showToast
 import com.jws.mobile.databinding.FragmentSearchBinding
 import com.jws.mobile.feature_search.presentation.epoxy.SearchEpoxyController
 import com.jws.mobile.feature_search.presentation.viewmodel.SearchUiEffect
@@ -72,21 +71,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         viewModel.eventFlow.collect { event ->
             when (event) {
                 is SearchUiEffect.ShowToastError,
-                is SearchUiEffect.ShowToastMessage -> showToast(event)
-
+                is SearchUiEffect.ShowToastMessage -> showToast(event, requireContext())
                 is SearchUiEffect.NavigateToPreview -> navigateToPreview(event)
                 is SearchUiEffect.OnCancelClicked -> cancelClick()
             }
         }
-    }
-
-    private fun showToast(effect: SearchUiEffect) {
-        val (message, layout) = when (effect) {
-            is SearchUiEffect.ShowToastError -> effect.error to R.layout.toast_error
-            is SearchUiEffect.ShowToastMessage -> effect.message to R.layout.toast_success
-            else -> return
-        }
-        ToastHelper.message(message, layout, requireContext())
     }
 
     private fun navigateToPreview(event: SearchUiEffect.NavigateToPreview) {

@@ -33,7 +33,7 @@ class PreviewViewModel @Inject constructor(
             is PreviewUiEvent.RequestNavigateToSearch -> navSearch()
             is PreviewUiEvent.RequestNavigateToDetails -> navDetails(event.productId)
             is PreviewUiEvent.FetchItems -> loadItems(event.query)
-            PreviewUiEvent.OnDeleteSearchClicked -> deleteSearch()
+            is PreviewUiEvent.OnDeleteSearchClicked -> deleteSearch()
         }
     }
 
