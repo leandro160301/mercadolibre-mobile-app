@@ -5,4 +5,5 @@ sealed class PreviewUiEvent {
     data object RequestNavigateToSearch : PreviewUiEvent()
     data class RequestNavigateToDetails(val productId: String) : PreviewUiEvent()
     data object OnDeleteSearchClicked : PreviewUiEvent()
+    data class OnImagePageChanged(val productId: String, val position: Int) : PreviewUiEvent()
 }

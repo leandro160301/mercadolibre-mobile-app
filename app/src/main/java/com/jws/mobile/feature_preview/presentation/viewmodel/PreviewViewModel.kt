@@ -34,6 +34,10 @@ class PreviewViewModel @Inject constructor(
             is PreviewUiEvent.RequestNavigateToDetails -> navDetails(event.productId)
             is PreviewUiEvent.FetchItems -> loadItems(event.query)
             is PreviewUiEvent.OnDeleteSearchClicked -> deleteSearch()
+            is PreviewUiEvent.OnImagePageChanged -> onImagePageChanged(
+                event.productId,
+                event.position
+            )
         }
     }
 
@@ -50,6 +54,12 @@ class PreviewViewModel @Inject constructor(
                 is Resource.Loading -> {}
             }
         }
+    }
+
+    private fun onImagePageChanged(productId: String, position: Int) {
+        val updatedMap = uiState.value.pagerPositions.toMutableMap()
+        updatedMap[productId] = position
+        _uiState.value = uiState.value.copy(pagerPositions = updatedMap)
     }
 
     private fun loadPreviews(items: List<String>) {

@@ -37,7 +37,9 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
     }
 
     private fun setupAdapter() {
-        controller = DetailEpoxyController().also { binding.epoxyRecyclerView.setController(it) }
+        controller = DetailEpoxyController(
+            onImagePageChanged = { viewModel.onEvent(DetailUiEvent.OnImagePageChanged(it)) }
+        ).also { binding.epoxyRecyclerView.setController(it) }
     }
 
     private fun fetchDetails(productId: String) {

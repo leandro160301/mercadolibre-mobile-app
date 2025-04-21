@@ -1,7 +1,8 @@
-package com.jws.mobile
+package com.jws.mobile.core.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.jws.mobile.R
 
 open class BaseActivity : AppCompatActivity() {
     fun setupUiTheme() {

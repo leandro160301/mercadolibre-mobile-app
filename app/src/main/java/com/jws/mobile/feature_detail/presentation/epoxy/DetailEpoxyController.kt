@@ -4,7 +4,9 @@ import com.airbnb.epoxy.TypedEpoxyController
 import com.jws.mobile.core.ui.epoxy.LoadingModel
 import com.jws.mobile.feature_detail.presentation.viewmodel.DetailUiState
 
-class DetailEpoxyController : TypedEpoxyController<DetailUiState>() {
+class DetailEpoxyController(
+    private val onImagePageChanged: (position: Int) -> Unit
+) : TypedEpoxyController<DetailUiState>() {
     override fun buildModels(state: DetailUiState?) {
         val uiState = state ?: return
 
@@ -15,11 +17,9 @@ class DetailEpoxyController : TypedEpoxyController<DetailUiState>() {
             return
         }
 
-        uiState.detail?.let { detail ->
-            ListDetailModel(detail = detail)
-                .id("detail_preview")
-                .addTo(this)
-        }
+        ListDetailModel(detail = uiState, onImagePageChanged = onImagePageChanged)
+            .id("detail_preview")
+            .addTo(this)
 
     }
 

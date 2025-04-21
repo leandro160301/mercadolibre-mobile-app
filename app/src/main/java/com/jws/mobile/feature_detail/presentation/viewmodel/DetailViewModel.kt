@@ -31,6 +31,7 @@ class DetailViewModel @Inject constructor(
             is DetailUiEvent.RequestNavigateToSearch -> navSearch()
             is DetailUiEvent.FetchDetails -> loadItems(event.id)
             is DetailUiEvent.OnBackClicked -> backClick()
+            is DetailUiEvent.OnImagePageChanged -> onImagePageChanged(event.position)
         }
     }
 
@@ -57,6 +58,10 @@ class DetailViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun onImagePageChanged(position: Int) {
+        _uiState.value = uiState.value.copy(currentImagePosition = position)
     }
 
     private fun emitEffect(effect: DetailUiEffect) {

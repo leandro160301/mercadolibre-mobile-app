@@ -4,4 +4,5 @@ sealed class DetailUiEvent {
     data class FetchDetails(val id: String) : DetailUiEvent()
     data object RequestNavigateToSearch : DetailUiEvent()
     data object OnBackClicked : DetailUiEvent()
+    data class OnImagePageChanged(val position: Int) : DetailUiEvent()
 }

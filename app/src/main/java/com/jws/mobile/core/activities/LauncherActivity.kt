@@ -1,9 +1,10 @@
-package com.jws.mobile
+package com.jws.mobile.core.activities
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.jws.mobile.R
 import com.jws.mobile.auth.presentation.AuthUiEffect
 import com.jws.mobile.auth.presentation.AuthViewModel
 import com.jws.mobile.core.utils.ToastHelper

@@ -68,7 +68,10 @@ class PreviewFragment : BaseFragment<FragmentPreviewBinding>() {
 
     private fun setupAdapter() {
         controller = PreviewEpoxyController(
-            onPreviewSelected = { viewModel.onEvent(PreviewUiEvent.RequestNavigateToDetails(it)) }
+            onPreviewSelected = { viewModel.onEvent(PreviewUiEvent.RequestNavigateToDetails(it)) },
+            onImagePageChanged = { productId, position ->
+                viewModel.onEvent(PreviewUiEvent.OnImagePageChanged(productId, position))
+            }
         ).also {
             binding.epoxyRecyclerView.setController(it)
         }

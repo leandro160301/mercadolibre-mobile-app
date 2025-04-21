@@ -7,6 +7,7 @@ data class PreviewUiState(
     val query: String? = null,
     val deleteButtonIsVisible: Boolean = false,
     val previewList: List<Preview> = emptyList(),
-    val selectedImageIndexMap: Map<String, Int> = emptyMap()
+    val pagerPositions: Map<String, Int> = emptyMap()
+
 )
 

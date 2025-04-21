@@ -17,7 +17,7 @@
         android:supportsRtl="true">
 
         <activity
-            android:name="com.jws.mobile.LauncherActivity"
+            android:name="com.jws.mobile.core.activities.LauncherActivity"
             android:clearTaskOnLaunch="true"
             android:exported="true"
             android:launchMode="singleTop"
@@ -33,7 +33,7 @@
 
 
         <activity
-            android:name="com.jws.mobile.MainActivity"
+            android:name="com.jws.mobile.core.activities.MainActivity"
             android:clearTaskOnLaunch="true"
             android:exported="true"
             android:largeHeap="true"

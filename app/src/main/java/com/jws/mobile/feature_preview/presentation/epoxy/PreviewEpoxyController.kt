@@ -5,7 +5,8 @@ import com.jws.mobile.core.ui.epoxy.LoadingModel
 import com.jws.mobile.feature_preview.presentation.viewmodel.PreviewUiState
 
 class PreviewEpoxyController(
-    private val onPreviewSelected: (productId: String) -> Unit
+    private val onPreviewSelected: (productId: String) -> Unit,
+    private val onImagePageChanged: (productId: String, position: Int) -> Unit
 ) : TypedEpoxyController<PreviewUiState>() {
     override fun buildModels(state: PreviewUiState?) {
         val uiState = state ?: return
@@ -27,7 +28,9 @@ class PreviewEpoxyController(
         uiState.previewList.forEachIndexed { index, preview ->
             ListPreviewModel(
                 preview = preview,
-                onPreviewSelected = onPreviewSelected
+                selectedPosition = uiState.pagerPositions[preview.body.id] ?: 0,
+                onPreviewSelected = onPreviewSelected,
+                onImagePageChanged = onImagePageChanged
             ).id(index)
                 .spanSizeOverride { _, _, _ -> 1 }
                 .addTo(this)

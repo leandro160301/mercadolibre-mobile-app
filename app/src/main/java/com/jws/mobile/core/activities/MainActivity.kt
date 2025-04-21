@@ -1,6 +1,7 @@
-package com.jws.mobile
+package com.jws.mobile.core.activities
 
 import android.os.Bundle
+import com.jws.mobile.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

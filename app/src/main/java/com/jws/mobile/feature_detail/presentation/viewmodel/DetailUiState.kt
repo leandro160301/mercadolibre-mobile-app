@@ -4,6 +4,7 @@ import com.jws.mobile.feature_detail.domain.Detail
 
 data class DetailUiState(
     val isLoading: Boolean = false,
-    val detail: Detail? = null
+    val detail: Detail? = null,
+    val currentImagePosition: Int = 0
 )
 
