@@ -24,7 +24,7 @@ import org.junit.Test
 class PreviewViewModelTest: PreviewBaseViewModelTest() {
 
     @Test
-    fun `cuando se dispara RequestNavigateToSearch, emite NavigateToSearch`() = runTest {
+    fun `when RequestNavigateToSearch is triggered, it emits NavigateToSearch`() = runTest {
         val job = launch(UnconfinedTestDispatcher()) {
             viewModel.eventFlow.collectLatest {
                 assertEquals(PreviewUiEffect.NavigateToSearch, it)
@@ -38,7 +38,7 @@ class PreviewViewModelTest: PreviewBaseViewModelTest() {
     }
 
     @Test
-    fun `cuando se dispara FetchItems con resultados, actualiza el uiState y llama a loadPreviews`() = runTest {
+    fun `when FetchItems is triggered with results, it updates the uiState and calls loadPreviews`() = runTest {
         val itemsResponse = ItemsResponse("1", results = listOf("id1", "id2"))
         coEvery { fetchItemsBySellerUseCase("query") } returns Resource.Success(itemsResponse)
         coEvery { fetchPreviewsByIdUseCase(any()) } returns Resource.Success(emptyList())
@@ -53,7 +53,7 @@ class PreviewViewModelTest: PreviewBaseViewModelTest() {
     }
 
     @Test
-    fun `cuando fetchItems falla, emite ShowToastError`() = runTest {
+    fun `when fetchItems fails, it emits ShowToastError`() = runTest {
         coEvery { fetchItemsBySellerUseCase("query") } returns Resource.Error(null, "Error")
 
         val job = launch(UnconfinedTestDispatcher()) {
@@ -70,14 +70,14 @@ class PreviewViewModelTest: PreviewBaseViewModelTest() {
     }
 
     @Test
-    fun `cuando se ejecuta el evento OnDeletSearchClicked, emite OnDeleteSearchClicked`() = runTest {
+    fun `when the OnDeletSearchClicked event is triggered, it emits OnDeleteSearchClicked`() = runTest {
         viewModel.onEvent(PreviewUiEvent.OnDeleteSearchClicked)
         val event = viewModel.eventFlow.first()
         assertTrue(event is PreviewUiEffect.OnDeleteSearchClicked)
     }
 
     @Test
-    fun `cuando se dispara RequestNavigateToDetails, emite NavigateToDetails con el id correcto`() = runTest {
+    fun `when RequestNavigateToDetails is triggered, it emits NavigateToDetails with the correct id`() = runTest {
         val productId = "MLA12345"
         val job = launch(UnconfinedTestDispatcher()) {
             viewModel.eventFlow.collectLatest {
@@ -93,7 +93,7 @@ class PreviewViewModelTest: PreviewBaseViewModelTest() {
     }
 
     @Test
-    fun `RequestNavigateToDetails emite NavigateToDetails`() = runTest {
+    fun `RequestNavigateToDetails emits NavigateToDetails`() = runTest {
         val productId = "MLA123"
 
         viewModel.eventFlow.test {
@@ -106,7 +106,7 @@ class PreviewViewModelTest: PreviewBaseViewModelTest() {
     }
 
     @Test
-    fun `cuando query es nulo, deleteButtonIsVisible es false`() = runTest {
+    fun `when query is null, deleteButtonIsVisible is false`() = runTest {
         coEvery { fetchItemsBySellerUseCase(null) } returns Resource.Success(ItemsResponse("1", emptyList()))
         coEvery { fetchPreviewsByIdUseCase(any()) } returns Resource.Success(emptyList())
 
@@ -118,7 +118,7 @@ class PreviewViewModelTest: PreviewBaseViewModelTest() {
     }
 
     @Test
-    fun `cuando fetchPreviews falla, emite ShowToastError`() = runTest {
+    fun `when fetchPreviews fails, emits ShowToastError`() = runTest {
         val itemsResponse = ItemsResponse("1", results = listOf("id1"))
         coEvery { fetchItemsBySellerUseCase("query") } returns Resource.Success(itemsResponse)
         coEvery { fetchPreviewsByIdUseCase(any()) } returns Resource.Error(null, "Preview error")

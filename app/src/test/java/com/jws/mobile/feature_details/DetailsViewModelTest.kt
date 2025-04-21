@@ -23,7 +23,7 @@ import org.junit.Test
 class DetailsViewModelTest: DetailsBaseViewModelTest() {
 
     @Test
-    fun `cuando se dispara RequestNavigateToSearch, emite NavigateToSearch`() = runTest {
+    fun `when RequestNavigateToSearch is triggered, it emits NavigateToSearch`() = runTest {
         val job = launch(UnconfinedTestDispatcher()) {
             viewModel.eventFlow.collectLatest {
                 assertEquals(DetailUiEffect.NavigateToSearch, it)
@@ -37,7 +37,7 @@ class DetailsViewModelTest: DetailsBaseViewModelTest() {
     }
 
     @Test
-    fun `cuando se dispara OnBackClicked, emite OnBackClicked`() = runTest {
+    fun `when OnBackClicked is triggered, it emits OnBackClicked`() = runTest {
         val job = launch(UnconfinedTestDispatcher()) {
             viewModel.eventFlow.collectLatest {
                 assertEquals(DetailUiEffect.OnBackClicked, it)
@@ -51,8 +51,8 @@ class DetailsViewModelTest: DetailsBaseViewModelTest() {
     }
 
     @Test
-    fun `cuando FetchDetails es exitoso, actualiza uiState con el detalle y setea isLoading en false`() = runTest {
-        val detail = fakeDetail(id = "MLA123")
+    fun `when FetchDetails is successful, it updates uiState with the details and sets isLoading to false`() = runTest {
+        val detail = detailFactory(id = "MLA123")
         coEvery { fetchDetailByIdUseCase("MLA123") } returns Resource.Success(detail)
 
         viewModel.onEvent(DetailUiEvent.FetchDetails("MLA123"))
@@ -64,13 +64,13 @@ class DetailsViewModelTest: DetailsBaseViewModelTest() {
     }
 
     @Test
-    fun `cuando FetchDetails falla, emite ShowToastError`() = runTest {
-        coEvery { fetchDetailByIdUseCase("MLA123") } returns Resource.Error(null, "Algo falló")
+    fun `when FetchDetails fails, it emits ShowToastError`() = runTest {
+        coEvery { fetchDetailByIdUseCase("MLA123") } returns Resource.Error(null, "Error")
 
         val job = launch(UnconfinedTestDispatcher()) {
             viewModel.eventFlow.collectLatest {
                 assertTrue(it is DetailUiEffect.ShowToastError)
-                assertEquals("Algo falló", (it as DetailUiEffect.ShowToastError).error)
+                assertEquals("Error", (it as DetailUiEffect.ShowToastError).error)
                 cancel()
             }
         }
@@ -81,8 +81,8 @@ class DetailsViewModelTest: DetailsBaseViewModelTest() {
     }
 
     @Test
-    fun `cuando hasFetched es true, no vuelve a llamar a fetchDetailByIdUseCase`() = runTest {
-        val detail = fakeDetail()
+    fun `when hasFetched is true, it does not call fetchDetailByIdUseCase again`() = runTest {
+        val detail = detailFactory()
         coEvery { fetchDetailByIdUseCase("MLA123") } returns Resource.Success(detail)
 
         viewModel.onEvent(DetailUiEvent.FetchDetails("MLA123"))
@@ -94,7 +94,7 @@ class DetailsViewModelTest: DetailsBaseViewModelTest() {
         coVerify(exactly = 1) { fetchDetailByIdUseCase("MLA123") }
     }
 
-    private fun fakeDetail(
+    private fun detailFactory(
         id: String = "MLA123",
         title: String = "Producto de prueba",
         price: Int = 1000,
@@ -103,7 +103,7 @@ class DetailsViewModelTest: DetailsBaseViewModelTest() {
         initialQuantity: Int = 20,
         condition: String = "new",
         pictures: List<Picture> = listOf(Picture(id = "1" ,url = "http://example.com/img1.jpg")),
-        warranty: String = "Garantía de 6 meses",
+        warranty: String = "Garantia de 6 meses",
         acceptsMercadopago: Boolean = true,
         buyingMode: String = "buy_it_now",
         internationalDeliveryMode: String = "none"
