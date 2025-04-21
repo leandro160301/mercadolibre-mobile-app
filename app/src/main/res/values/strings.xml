@@ -2,5 +2,17 @@
     <string name="app_name">Mobile candidate</string>
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="page_not_results">No se encontraron resultados</string>
+    <string name="page_detail_buy_button">Comprar ahora</string>
+    <string name="page_detail_shipping">Envío gratis a todo el país</string>
+    <string name="page_detail_description">Descripción del producto</string>
+    <string name="page_detail_warranty">Garantia</string>
+    <string name="page_detail_tecnics_details">Detalles tecnicos</string>
+    <string name="page_details_description_product">• Marca: X\n• Modelo: Y\n• Color: Negro\n• Peso: 1.5kg</string>
+    <string name="search_hint">Buscar</string>
+    <string name="search_cancel_button">Cancelar</string>
+    <string name="page_detail_description_example">Este producto es ideal para...</string>
+    <string name="page_detail_warranty_example">Este producto es ideal para...</string>
+    <string name="back_button">Atras</string>
 
 </resources>

@@ -38,7 +38,6 @@
             android:id="@+id/productTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Título del producto"
             android:textSize="16sp"
             android:textColor="#000000"
             android:layout_marginBottom="4dp"
@@ -49,7 +48,6 @@
             android:id="@+id/productPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Precio: $999"
             android:textSize="14sp"
             android:textColor="#000000"
             android:layout_marginBottom="4dp" />
@@ -58,7 +56,6 @@
             android:id="@+id/productCondition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Condición: Nuevo"
             android:textSize="14sp"
             android:textColor="#888888"
             android:layout_marginBottom="4dp" />
@@ -67,7 +64,6 @@
             android:id="@+id/productAvailability"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Disponible: 10"
             android:textSize="14sp"
             android:textColor="#888888"
             android:layout_marginBottom="4dp" />
@@ -76,7 +72,6 @@
             android:id="@+id/productWarranty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Garantía: 6 meses"
             android:textSize="14sp"
             android:textColor="#888888" />
     </LinearLayout>

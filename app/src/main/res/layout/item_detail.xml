@@ -43,7 +43,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Título del producto"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -53,7 +52,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="$999.99"
                 android:textColor="@color/negro"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -63,7 +61,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Nuevo | 10 disponibles"
                 android:textColor="#666666"
                 android:textSize="14sp" />
 
@@ -73,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/azul"
-                android:text="Comprar ahora"
+                android:text="@string/page_detail_buy_button"
                 android:textColor="#FFFFFF" />
 
             <TextView
@@ -81,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="Envío gratis a todo el país"
+                android:text="@string/page_detail_shipping"
                 android:textColor="@color/verde"
                 android:textSize="14sp" />
 
@@ -89,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="Descripción del producto"
+                android:text="@string/page_detail_description"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -98,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="Este producto es ideal para..."
+                android:text="@string/page_detail_description_example"
                 android:textColor="#000000"
                 android:textSize="14sp" />
 
@@ -106,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="Garantia"
+                android:text="@string/page_detail_warranty"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -115,7 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="Este producto es ideal para..."
+                android:text="@string/page_detail_warranty_example"
                 android:textColor="#000000"
                 android:textSize="14sp" />
 
@@ -123,7 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="Detalles técnicos"
+                android:text="@string/page_detail_tecnics_details"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -132,7 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="• Marca: X\n• Modelo: Y\n• Color: Negro\n• Peso: 1.5kg"
+                android:text="@string/page_details_description_product"
                 android:textColor="#000000"
                 android:textSize="14sp" />
 

@@ -10,7 +10,7 @@
         android:id="@+id/textNoResults"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No se encontraron resultados"
+        android:text="@string/page_not_results"
         android:textSize="18sp"
         android:textColor="@android:color/darker_gray"
         android:textStyle="bold"

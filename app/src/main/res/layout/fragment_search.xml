@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Encabezado amarillo -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/headerLayout"
         android:layout_width="0dp"
@@ -16,7 +15,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Contenedor del EditText con icono de búsqueda -->
         <FrameLayout
             android:id="@+id/searchContainer"
             android:layout_width="0dp"
@@ -30,7 +28,8 @@
                 android:id="@+id/editTextSearch"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Buscar"
+                android:autofillHints=""
+                android:hint="@string/search_hint"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:background="@drawable/search_style"
@@ -43,21 +42,20 @@
 
             <ImageView
                 android:id="@+id/iconSearch"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:layout_gravity="start|center_vertical"
                 android:layout_marginStart="12dp"
+                android:contentDescription="@string/search_hint"
                 android:src="@drawable/icon_search"
-                android:tint="@color/gris"
-                android:contentDescription="Buscar" />
+                app:tint="@color/gris" />
         </FrameLayout>
 
-        <!-- Botón Cancelar -->
         <TextView
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancelar"
+            android:text="@string/search_cancel_button"
             android:textColor="@android:color/black"
             android:textSize="14sp"
             android:padding="8dp"
@@ -67,7 +65,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- EpoxyRecyclerView debajo del encabezado -->
     <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/epoxyRecyclerView"
         android:layout_width="0dp"

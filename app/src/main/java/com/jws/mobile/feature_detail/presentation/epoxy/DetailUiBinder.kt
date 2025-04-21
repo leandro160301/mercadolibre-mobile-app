@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.viewpager2.widget.ViewPager2
 import com.jws.mobile.core.utils.ImagePagerAdapter
 import com.jws.mobile.databinding.ItemDetailBinding
+import com.jws.mobile.feature_detail.domain.Detail
 import com.jws.mobile.feature_detail.presentation.viewmodel.DetailUiState
 
 class DetailUiBinder(
@@ -18,19 +19,7 @@ class DetailUiBinder(
             binding.productTitle.text = it.title
             binding.productPrice.text = "$${it.price}"
 
-            it.pictures.let { pictures ->
-                val adapter = ImagePagerAdapter(pictures)
-                binding.imagePager.adapter = adapter
-                binding.imageIndicator.setViewPager(binding.imagePager)
-                binding.imagePager.setCurrentItem(detailUiState.currentImagePosition, false)
-
-                binding.imagePager.registerOnPageChangeCallback(object :
-                    ViewPager2.OnPageChangeCallback() {
-                    override fun onPageSelected(position: Int) {
-                        onImagePageChanged(position)
-                    }
-                })
-            }
+            setupPictures(it, detailUiState)
 
             val conditionFormatted = when (it.condition) {
                 "new" -> "Nuevo"
@@ -52,5 +41,21 @@ class DetailUiBinder(
         }
 
 
+    }
+
+    private fun setupPictures(it: Detail, detailUiState: DetailUiState) {
+        it.pictures.let { pictures ->
+            val adapter = ImagePagerAdapter(pictures)
+            binding.imagePager.adapter = adapter
+            binding.imageIndicator.setViewPager(binding.imagePager)
+            binding.imagePager.setCurrentItem(detailUiState.currentImagePosition, false)
+
+            binding.imagePager.registerOnPageChangeCallback(object :
+                ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    onImagePageChanged(position)
+                }
+            })
+        }
     }
 }
