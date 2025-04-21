@@ -46,7 +46,8 @@ class PreviewViewModel @Inject constructor(
             _uiState.value = _uiState.value.copy(
                 isLoading = true,
                 query = query,
-                deleteButtonIsVisible = !query.isNullOrEmpty()
+                deleteButtonIsVisible = !query.isNullOrEmpty(),
+                pagerPositions = emptyMap()
             )
             when (val result = fetchItemsBySellerUseCase(query)) {
                 is Resource.Success -> handleItemsFetched(result)

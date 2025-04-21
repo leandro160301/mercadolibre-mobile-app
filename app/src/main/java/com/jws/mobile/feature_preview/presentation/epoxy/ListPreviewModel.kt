@@ -29,19 +29,31 @@ data class ListPreviewModel(
         productAvailability.text = "Disponible: ${preview.body.availableQuantity}"
         productWarranty.text = "Garantía: ${preview.body.warranty}"
 
-        val adapter = ImagePagerAdapter(preview.body.pictures)
-        imagePager.adapter = adapter
+        (imagePager.getTag(R.id.view_pager_callback_tag) as? ViewPager2.OnPageChangeCallback)?.let {
+            imagePager.unregisterOnPageChangeCallback(it)
+        }
+
+        imagePager.adapter = ImagePagerAdapter(preview.body.pictures)
         imageIndicator.setViewPager(imagePager)
+
         imagePager.setCurrentItem(selectedPosition, false)
 
-        imagePager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        val callback = object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 onImagePageChanged(preview.body.id, position)
             }
-        })
+        }
+
+        imagePager.registerOnPageChangeCallback(callback)
+        imagePager.setTag(R.id.view_pager_callback_tag, callback)
 
         card.setOnClickListener { onPreviewSelected(preview.body.id) }
     }
 
-
+    override fun ItemPreviewBinding.unbind() {
+        (imagePager.getTag(R.id.view_pager_callback_tag) as? ViewPager2.OnPageChangeCallback)?.let {
+            imagePager.unregisterOnPageChangeCallback(it)
+        }
+        imagePager.setTag(R.id.view_pager_callback_tag, null)
+    }
 }
