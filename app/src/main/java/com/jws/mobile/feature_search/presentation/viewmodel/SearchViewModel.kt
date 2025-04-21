@@ -29,7 +29,7 @@ class SearchViewModel @Inject constructor(
         fetchLatestSearch()
     }
 
-    private fun fetchLatestSearch() {
+    private fun fetchLatestSearch() = viewModelScope.launch(dispatcherProvider.io) {
         _uiState.value = _uiState.value.copy(search = getRecentSearchUseCase())
     }
 
@@ -41,8 +41,10 @@ class SearchViewModel @Inject constructor(
     private fun cancelClick() = emitEffect(SearchUiEffect.OnCancelClicked)
 
     private fun navPreview(value: String) {
-        addRecentSearchUseCase(value)
-        emitEffect(SearchUiEffect.NavigateToPreview(value))
+        viewModelScope.launch(dispatcherProvider.io) {
+            addRecentSearchUseCase(value)
+            emitEffect(SearchUiEffect.NavigateToPreview(value))
+        }
     }
 
     private fun emitEffect(effect: SearchUiEffect) {

@@ -5,5 +5,5 @@ import javax.inject.Inject
 class AddRecentSearchUseCase @Inject constructor(
     private val searchRepository: SearchRepository
 ) {
-    operator fun invoke(value: String) = searchRepository.addRecentSearch(value)
+    suspend operator fun invoke(value: String) = searchRepository.addRecentSearch(value)
 }

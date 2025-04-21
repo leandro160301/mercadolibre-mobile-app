@@ -47,11 +47,15 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    private suspend fun AuthViewModel.handleSuccess(result: Resource<Auth>) {
+    private suspend fun handleSuccess(result: Resource<Auth>) {
         _uiState.value = _uiState.value.copy(isLoading = false)
         result.data?.let {
-            updateRefreshTokenUseCase(it.refreshToken)
             TokenManager.setToken(it.accessToken)
+            try {
+                updateRefreshTokenUseCase(it.refreshToken)
+            } catch (e: Exception) {
+                handleAuthError(e.message)
+            }
         }
         navToMain()
     }

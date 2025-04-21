@@ -8,7 +8,7 @@ import javax.inject.Inject
 class SearchRepositoryImpl @Inject constructor(
     private val preferencesHelper: PreferencesHelper
 ) : SearchRepository {
-    override fun addRecentSearch(value: String) {
+    override suspend fun addRecentSearch(value: String) {
         val currentList =
             preferencesHelper.getListModel(RECENT_SEARCHES_KEY, Search::class.java)?.toMutableList()
                 ?: mutableListOf()
@@ -17,7 +17,7 @@ class SearchRepositoryImpl @Inject constructor(
         preferencesHelper.putListModel(RECENT_SEARCHES_KEY, currentList)
     }
 
-    override fun getRecentSearch(): List<Search> {
+    override suspend fun getRecentSearch(): List<Search> {
         val list = preferencesHelper.getListModel(RECENT_SEARCHES_KEY, Search::class.java)
 
         return if (list.isNullOrEmpty()) {
